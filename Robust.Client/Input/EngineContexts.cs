@@ -69,6 +69,7 @@ namespace Robust.Client.Input
             common.AddFunction(EngineKeyFunctions.TextCut);
             common.AddFunction(EngineKeyFunctions.TextPaste);
             common.AddFunction(EngineKeyFunctions.TextSelectAll);
+            common.AddFunction(EngineKeyFunctions.TextDeleteAfter);
             common.AddFunction(EngineKeyFunctions.TextHistoryPrev);
             common.AddFunction(EngineKeyFunctions.TextHistoryNext);
             common.AddFunction(EngineKeyFunctions.TextReleaseFocus);
