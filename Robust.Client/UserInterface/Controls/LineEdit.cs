@@ -544,6 +544,40 @@ namespace Robust.Client.UserInterface.Controls
 
                     args.Handle();
                 }
+                else if (args.Function == EngineKeyFunctions.TextLineDelete)
+                {
+                    if (Editable)
+                    {
+                        var changed = false;
+
+                        // If there is a selection, we just delete the selection.
+                        // Otherwise we delete until the end of the line.
+                        if (_selectionStart != _cursorPosition)
+                        {
+                            _text = _text.Remove(SelectionLower, SelectionLength);
+                            _cursorPosition = SelectionLower;
+                            changed = true;
+                        }
+                        else
+                        {
+                            var len = _text.Length - _cursorPosition;
+                            if (len > 0)
+                            {
+                                _text = _text.Remove(_cursorPosition, len);
+                                changed = true;
+                            }
+                        }
+                        if (changed)
+                        {
+                            _selectionStart = _cursorPosition;
+                            OnTextChanged?.Invoke(new LineEditEventArgs(this, _text));
+                            _updatePseudoClass();
+                            OnTextRemoved?.Invoke(new LineEditTextRemovedEventArgs(_text, _text, _cursorPosition, _selectionStart));
+                        }
+                    }
+
+                    args.Handle();
+                }
                 else if (args.Function == EngineKeyFunctions.TextCursorLeft)
                 {
                     if (_selectionStart != _cursorPosition)

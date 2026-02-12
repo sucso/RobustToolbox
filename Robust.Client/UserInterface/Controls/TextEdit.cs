@@ -423,6 +423,48 @@ public sealed class TextEdit : Control
                 args.Handle();
             }
         }
+        else if (args.Function == EngineKeyFunctions.TextLineDelete)
+        {
+            if (Editable)
+            {
+                var changed = false;
+                var (_, _, lineEnd) = GetLineForCursorPos(_cursorPosition);
+
+                // If there is a selection, we just delete the selection.
+                // Otherwise we delete until the end of the line.
+                if (_selectionStart != _cursorPosition)
+                {
+                    TextRope = Rope.Delete(TextRope, SelectionLower.Index, SelectionLength);
+                    _cursorPosition = SelectionLower;
+                    changed = true;
+                }
+                else if (_cursorPosition.Index == lineEnd && _cursorPosition.Index < TextLength)
+                {
+                    // At the end of a line: delete the newline character (join lines).
+                    TextRope = Rope.Delete(TextRope, _cursorPosition.Index, 1);
+                    changed = true;
+                }
+                else
+                {
+                    // Not at the end: delete until the end of the current line.
+                    var remAmt = lineEnd - _cursorPosition.Index;
+                    if (remAmt > 0)
+                    {
+                        TextRope = Rope.Delete(TextRope, _cursorPosition.Index, remAmt);
+                        changed = true;
+                    }
+                }
+
+                if (changed)
+                {
+                    _selectionStart = _cursorPosition;
+                    OnTextChanged?.Invoke(new TextEditEventArgs(this, _textRope));
+                }
+
+                InvalidateHorizontalCursorPos();
+                args.Handle();
+            }
+        }
         else if (args.Function == EngineKeyFunctions.TextNewline)
         {
             InsertAtCursor("\n");

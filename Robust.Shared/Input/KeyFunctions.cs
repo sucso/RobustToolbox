@@ -72,6 +72,7 @@ namespace Robust.Shared.Input
         public static readonly BoundKeyFunction TextDelete = "TextDelete";
         public static readonly BoundKeyFunction TextWordBackspace = "TextWordBackspace";
         public static readonly BoundKeyFunction TextWordDelete = "TextWordDelete";
+        public static readonly BoundKeyFunction TextLineDelete = "TextLineDelete";
         public static readonly BoundKeyFunction TextNewline = "TextNewline";
         public static readonly BoundKeyFunction TextSubmit = "TextSubmit";
         public static readonly BoundKeyFunction MultilineTextSubmit = "MultilineTextSubmit";

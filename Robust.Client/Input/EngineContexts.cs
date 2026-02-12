@@ -62,6 +62,7 @@ namespace Robust.Client.Input
             common.AddFunction(EngineKeyFunctions.TextDelete);
             common.AddFunction(EngineKeyFunctions.TextWordBackspace);
             common.AddFunction(EngineKeyFunctions.TextWordDelete);
+            common.AddFunction(EngineKeyFunctions.TextLineDelete);
             common.AddFunction(EngineKeyFunctions.TextNewline);
             common.AddFunction(EngineKeyFunctions.TextSubmit);
             common.AddFunction(EngineKeyFunctions.MultilineTextSubmit);
